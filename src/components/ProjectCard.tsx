@@ -41,7 +41,7 @@ export default function ProjectCard({ project, overlayColor, overlayOpacity }: P
           }}
         />
       )}
-      <div className="absolute bottom-0 left-0 right-0 p-6 pt-8 bg-gradient-to-t from-[rgba(42,42,42,0.85)] to-transparent text-white translate-y-2.5 opacity-0 transition-all duration-400 group-hover:translate-y-0 group-hover:opacity-100">
+      <div className="absolute bottom-0 left-0 right-0 p-6 pt-8 bg-gradient-to-t from-[rgba(42,42,42,0.85)] to-transparent text-white transition-all duration-400 translate-y-2.5 opacity-0 md:translate-y-2.5 md:opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
         <h3 className="font-display text-xl font-semibold mb-1">{project.title}</h3>
         <span className="text-xs tracking-[0.1em] uppercase opacity-70">
           {categoryLabels[project.category] || project.category} · {project.location?.split(',')[0]}
