@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getPublishedProjects } from '@/lib/queries';
 import PortfolioClient from './portfolio-client';
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PortfolioPage() {
-  return <PortfolioClient />;
+export default async function PortfolioPage() {
+  const projects = await getPublishedProjects();
+  return <PortfolioClient initialProjects={projects} />;
 }

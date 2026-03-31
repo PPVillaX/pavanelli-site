@@ -1,25 +1,20 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import type { ProjectWithImages } from '@/lib/types';
 import ProjectCard from '@/components/ProjectCard';
 import ScrollReveal from '@/components/ScrollReveal';
 
-export default function PortfolioClient() {
-  const [projects, setProjects] = useState<ProjectWithImages[]>([]);
-  const [activeFilter, setActiveFilter] = useState('todos');
-  const [loading, setLoading] = useState(true);
+interface PortfolioClientProps {
+  initialProjects: ProjectWithImages[];
+}
 
-  useEffect(() => {
-    fetch('/api/projects')
-      .then(r => r.json())
-      .then(d => { setProjects(d); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, []);
+export default function PortfolioClient({ initialProjects }: PortfolioClientProps) {
+  const [activeFilter, setActiveFilter] = useState('todos');
 
   const filterCategories = useMemo(() => {
     const seen = new Set<string>();
-    projects.forEach(p => { if (p.category) seen.add(p.category); });
+    initialProjects.forEach(p => { if (p.category) seen.add(p.category); });
     return [
       { value: 'todos', label: 'Todos' },
       ...Array.from(seen).sort().map(c => ({
@@ -27,11 +22,11 @@ export default function PortfolioClient() {
         label: c.charAt(0).toUpperCase() + c.slice(1),
       })),
     ];
-  }, [projects]);
+  }, [initialProjects]);
 
   const filtered = activeFilter === 'todos'
-    ? projects
-    : projects.filter(p => p.category === activeFilter);
+    ? initialProjects
+    : initialProjects.filter(p => p.category === activeFilter);
 
   return (
     <section className="px-6 md:px-[60px] py-20 md:py-[120px]">
@@ -70,26 +65,18 @@ export default function PortfolioClient() {
       </ScrollReveal>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-[60px]">
-        {loading ? (
-          <div className="col-span-3 text-center py-20">
-            <div className="animate-spin w-8 h-8 border-2 border-brand-terracotta border-t-transparent rounded-full mx-auto" />
+        {filtered.map((project, i) => (
+          <div
+            key={project.slug}
+            className="transition-all duration-500"
+            style={{ animationDelay: `${i * 50}ms` }}
+          >
+            <ProjectCard project={project} />
           </div>
-        ) : (
-          filtered.map((project, i) => (
-            <div
-              key={project.slug}
-              className="transition-all duration-500"
-              style={{ animationDelay: `${i * 50}ms` }}
-            >
-              <ProjectCard
-                project={project}
-              />
-            </div>
-          ))
-        )}
+        ))}
       </div>
 
-      {!loading && filtered.length === 0 && (
+      {filtered.length === 0 && (
         <div className="text-center py-20 text-brand-gray">
           <p className="text-lg">Nenhum projeto encontrado nesta categoria.</p>
         </div>
