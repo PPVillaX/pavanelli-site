@@ -29,7 +29,6 @@ export default function ProjectCard({ project, overlayColor, overlayOpacity }: P
         className="object-cover transition-transform duration-[600ms] ease-out group-hover:scale-105"
         style={{ objectPosition: (project as { cover_image_focal_point?: string | null }).cover_image_focal_point || 'center' }}
         sizes="(max-width: 768px) 100vw, 33vw"
-        unoptimized
       />
       {overlayColor && overlayOpacity !== undefined && overlayOpacity > 0 && (
         <div

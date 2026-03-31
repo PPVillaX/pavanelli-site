@@ -48,7 +48,6 @@ export default function HeroSlideshow({ slides, title, subtitle }: HeroSlideshow
               className="object-cover"
               priority={i === 0}
               sizes="100vw"
-              unoptimized
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-[rgba(42,42,42,0.1)] via-[rgba(42,42,42,0.3)] to-[rgba(42,42,42,0.7)]" />
