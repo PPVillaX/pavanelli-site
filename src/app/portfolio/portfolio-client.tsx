@@ -42,7 +42,7 @@ export default function PortfolioClient() {
       </ScrollReveal>
       <ScrollReveal delay={100}>
         <h1 className="font-display text-[32px] md:text-[48px] font-bold text-brand-graphite leading-[1.1] mb-6 tracking-tight">
-          Todos os projetos
+          Projetos selecionados
         </h1>
       </ScrollReveal>
       <ScrollReveal delay={200}>
