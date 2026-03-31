@@ -34,6 +34,7 @@ export async function LocalBusinessJsonLd() {
       streetAddress: contact.address_full || undefined,
       addressLocality: 'Uberlândia',
       addressRegion: 'MG',
+      postalCode: '38408-144',
       addressCountry: 'BR',
     },
     geo: contact.address_coords.lat !== 0 ? {
@@ -41,7 +42,7 @@ export async function LocalBusinessJsonLd() {
       latitude: contact.address_coords.lat,
       longitude: contact.address_coords.lng,
     } : undefined,
-    image: `${BASE_URL}/images/projects/casa-da-oliveira/IG_PA_OE-1.jpg`,
+    image: 'https://fgssgugdoatfchtcrlpa.supabase.co/storage/v1/object/public/project-images/uploads/ig_pa_oe-2-1774920597867.webp',
     sameAs: sameAs.length > 0 ? sameAs : undefined,
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
