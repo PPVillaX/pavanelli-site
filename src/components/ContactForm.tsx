@@ -43,6 +43,9 @@ export default function ContactForm() {
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', message: '' });
       track('contact_submit', { page: typeof window !== 'undefined' ? window.location.pathname : '/' });
+      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+        window.gtag('event', 'contact_submit', { event_category: 'conversion' });
+      }
       setTimeout(() => setStatus('idle'), 5000);
     } catch (err) {
       setStatus('error');

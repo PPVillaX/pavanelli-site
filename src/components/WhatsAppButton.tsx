@@ -13,6 +13,9 @@ export default function WhatsAppButton({ phone, message }: WhatsAppButtonProps) 
 
   function handleClick() {
     track('whatsapp_click', { page: typeof window !== 'undefined' ? window.location.pathname : '/' });
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'whatsapp_click', { event_category: 'engagement' });
+    }
   }
 
   const href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
