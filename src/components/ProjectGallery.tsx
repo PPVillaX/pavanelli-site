@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useCallback, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { useTracking } from '@/hooks/useTracking';
-// Note: lightbox uses plain <img> for proper max-w/max-h sizing
 
 interface ProjectGalleryProps {
   images: string[];
@@ -112,8 +112,8 @@ export default function ProjectGallery({ images, title, projectSlug }: ProjectGa
         </div>
       )}
 
-      {/* Lightbox */}
-      {lightboxIndex !== null && (
+      {/* Lightbox — rendered via portal to escape any ancestor transform/stacking context */}
+      {lightboxIndex !== null && createPortal(
         <div
           className="lightbox-overlay"
           onClick={closeLightbox}
@@ -153,7 +153,8 @@ export default function ProjectGallery({ images, title, projectSlug }: ProjectGa
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/50 text-sm">
             {lightboxIndex + 1} / {images.length}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

@@ -26,7 +26,7 @@ export default function ScrollReveal({ children, className = '', delay = 0 }: Sc
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0 }
     );
 
     observer.observe(el);
