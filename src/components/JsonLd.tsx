@@ -26,7 +26,6 @@ export async function LocalBusinessJsonLd() {
     '@id': `${BASE_URL}/#organization`,
     name: seo.site_name || undefined,
     description: seo.site_description || undefined,
-    url: BASE_URL,
     telephone: contact.whatsapp_number ? `+${contact.whatsapp_number}` : undefined,
     email: contact.contact_email || undefined,
     address: {
