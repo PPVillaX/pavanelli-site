@@ -18,13 +18,31 @@ export default function HeroAdmin({ initialPhotos }: Props) {
   const [error, setError] = useState('');
   const supabase = useMemo(() => createBrowserSupabaseClient(), []);
 
+  async function resizeOnClient(file: File, maxWidth = 2400): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const scale = img.width > maxWidth ? maxWidth / img.width : 1;
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        const ctx = canvas.getContext('2d')!;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Canvas toBlob falhou')), 'image/jpeg', 0.88);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Erro ao carregar imagem')); };
+      img.src = url;
+    });
+  }
+
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const MAX_SIZE = 10 * 1024 * 1024; // 10 MB
-    if (file.size > MAX_SIZE) {
-      setError('Arquivo muito grande. Tamanho máximo: 10 MB.');
+    if (!file.type.startsWith('image/')) {
+      setError('Envie apenas imagens (JPG, PNG, WebP).');
       if (fileInputRef.current) fileInputRef.current.value = '';
       return;
     }
@@ -33,8 +51,11 @@ export default function HeroAdmin({ initialPhotos }: Props) {
     setError('');
 
     try {
+      const resized = await resizeOnClient(file);
+      const resizedFile = new File([resized], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' });
+
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', resizedFile);
       formData.append('folder', 'hero');
 
       const uploadRes = await fetch('/api/upload', { method: 'POST', body: formData });
