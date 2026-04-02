@@ -67,12 +67,12 @@ export default function ProjectDetailClient({ project, prev, next, phone, defaul
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12 md:gap-16">
           {/* Gallery */}
-          <ScrollReveal>
+          <ScrollReveal className="order-2 lg:order-1">
             <ProjectGallery images={imageUrls} title={project.title} projectSlug={slug} />
           </ScrollReveal>
 
           {/* Sidebar */}
-          <div className="lg:sticky lg:top-24 lg:self-start">
+          <div className="order-1 lg:order-2 lg:sticky lg:top-24 lg:self-start">
             <ScrollReveal delay={200}>
               <h1 className="font-display text-[32px] md:text-[40px] font-bold text-brand-graphite leading-[1.1] mb-6 tracking-tight">
                 {project.title}
