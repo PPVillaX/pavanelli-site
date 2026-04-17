@@ -56,7 +56,7 @@ export async function POST(request: Request) {
 
     if (uploadError) {
       console.error('Storage upload error:', uploadError);
-      return NextResponse.json({ error: 'Erro ao fazer upload da imagem.' }, { status: 500 });
+      return NextResponse.json({ error: uploadError.message || 'Erro ao fazer upload da imagem.' }, { status: 500 });
     }
 
     // Get public URL

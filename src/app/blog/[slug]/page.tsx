@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import { getPostBySlug, getPublishedPosts } from '@/lib/queries';
 import { BreadcrumbJsonLd } from '@/components/JsonLdProject';
 
+export const revalidate = 60;
+
 interface Props {
   params: Promise<{ slug: string }>;
 }

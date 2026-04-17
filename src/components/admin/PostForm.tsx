@@ -88,8 +88,11 @@ export default function PostForm({ initialData, isEditing = false, categories }:
       const result = await res.json();
       if (res.ok) {
         setData(prev => ({ ...prev, cover_image_url: result.url }));
+      } else {
+        setError(result.error || 'Erro ao fazer upload da imagem.');
       }
     } catch (err) {
+      setError('Erro ao fazer upload da imagem.');
       console.error(err);
     }
     setCoverUploading(false);
@@ -125,11 +128,11 @@ export default function PostForm({ initialData, isEditing = false, categories }:
         if (insertError) throw insertError;
       }
 
-      try { await fetch('/api/revalidate', { method: 'POST' }); } catch {}
+      try { await fetch('/api/revalidate', { method: 'POST' }); } catch { /* non-critical */ }
       router.push('/admin/posts');
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao salvar post.');
+      setError((err as any)?.message || 'Erro ao salvar post.');
       setSaving(false);
     }
   };

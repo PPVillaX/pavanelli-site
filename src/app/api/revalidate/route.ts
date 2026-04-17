@@ -22,12 +22,13 @@ export async function POST() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // Revalidate all pages that consume site_settings
   revalidatePath('/', 'layout');
   revalidatePath('/contato');
   revalidatePath('/sobre');
   revalidatePath('/portfolio');
+  revalidatePath('/portfolio/[slug]', 'page');
   revalidatePath('/blog');
+  revalidatePath('/blog/[slug]', 'page');
 
   return NextResponse.json({ revalidated: true, at: new Date().toISOString() });
 }

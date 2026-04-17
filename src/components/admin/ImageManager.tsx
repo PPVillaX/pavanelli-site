@@ -19,6 +19,7 @@ interface Props {
 export default function ImageManager({ images, projectId, onChange }: Props) {
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
   const uploadFile = async (file: File): Promise<string | null> => {
     const formData = new FormData();
@@ -31,6 +32,8 @@ export default function ImageManager({ images, projectId, onChange }: Props) {
       if (!res.ok) throw new Error(data.error);
       return data.url;
     } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Erro ao fazer upload.';
+      setUploadError(msg);
       console.error('Upload failed:', err);
       return null;
     }
@@ -38,6 +41,7 @@ export default function ImageManager({ images, projectId, onChange }: Props) {
 
   const handleFiles = useCallback(async (files: FileList | File[]) => {
     setUploading(true);
+    setUploadError('');
     const fileArray = Array.from(files).filter(f => f.type.startsWith('image/'));
     const newImages: ImageUpload[] = [];
 
@@ -117,6 +121,9 @@ export default function ImageManager({ images, projectId, onChange }: Props) {
             <p className="text-xs text-brand-gray/60 mt-1">
               Imagens serão otimizadas automaticamente (WebP, max 2400px)
             </p>
+            {uploadError && (
+              <p className="text-xs text-red-500 mt-2 font-medium">{uploadError}</p>
+            )}
           </>
         )}
       </div>

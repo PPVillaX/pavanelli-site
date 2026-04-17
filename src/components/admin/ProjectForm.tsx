@@ -162,7 +162,7 @@ export default function ProjectForm({ initialData, isEditing = false, categoryOp
       router.push('/admin/projetos');
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao salvar projeto.');
+      setError((err as any)?.message || 'Erro ao salvar projeto.');
       setSaving(false);
     }
   };
@@ -182,7 +182,7 @@ export default function ProjectForm({ initialData, isEditing = false, categoryOp
       router.push('/admin/projetos');
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao excluir projeto.');
+      setError((err as any)?.message || 'Erro ao excluir projeto.');
       setDeleting(false);
     }
   };

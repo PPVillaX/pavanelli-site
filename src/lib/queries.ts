@@ -16,20 +16,25 @@ const PUBLIC_REVALIDATE = 3600; // 1 hour — public content rarely changes
 const ADMIN_REVALIDATE = 0;    // always fresh for admin
 
 async function pgrest<T = unknown>(path: string, revalidate = PUBLIC_REVALIDATE): Promise<T> {
-  const url = `${SUPABASE_URL}${path}`;
-  const res = await fetch(url, {
-    headers: {
-      'apikey': SERVICE_KEY,
-      'Authorization': `Bearer ${SERVICE_KEY}`,
-      'Accept': 'application/json',
-    },
-    next: { revalidate },
-  });
-  if (!res.ok) {
-    console.error(`pgrest error ${res.status}: ${await res.text()}`);
+  try {
+    const url = `${SUPABASE_URL}${path}`;
+    const res = await fetch(url, {
+      headers: {
+        'apikey': SERVICE_KEY,
+        'Authorization': `Bearer ${SERVICE_KEY}`,
+        'Accept': 'application/json',
+      },
+      next: { revalidate },
+    });
+    if (!res.ok) {
+      console.error(`pgrest error ${res.status}: ${await res.text()}`);
+      return [] as unknown as T;
+    }
+    return res.json();
+  } catch (err) {
+    console.error('pgrest fetch error:', err);
     return [] as unknown as T;
   }
-  return res.json();
 }
 
 // ─── Public Queries ───────────────────────────────────────────────
