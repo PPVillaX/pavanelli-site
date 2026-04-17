@@ -18,8 +18,16 @@ interface PostData {
   category_id: string;
   tags: string[];
   is_published: boolean;
+  published_at: string;
   meta_title: string;
   meta_description: string;
+}
+
+function toDatetimeLocal(iso: string | null | undefined): string {
+  if (!iso) return new Date().toISOString().slice(0, 16);
+  const d = new Date(iso);
+  const offset = d.getTimezoneOffset();
+  return new Date(d.getTime() - offset * 60000).toISOString().slice(0, 16);
 }
 
 interface Props {
@@ -38,12 +46,19 @@ const defaultData: PostData = {
   category_id: '',
   tags: [],
   is_published: false,
+  published_at: new Date().toISOString().slice(0, 16),
   meta_title: '',
   meta_description: '',
 };
 
 export default function PostForm({ initialData, isEditing = false, categories }: Props) {
-  const [data, setData] = useState<PostData>(initialData || defaultData);
+  const [data, setData] = useState<PostData>(() => {
+    const base = initialData || defaultData;
+    return {
+      ...base,
+      published_at: toDatetimeLocal((base as any).published_at),
+    };
+  });
   const [tagInput, setTagInput] = useState('');
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -115,7 +130,9 @@ export default function PostForm({ initialData, isEditing = false, categories }:
         category_id: data.category_id || null,
         tags: data.tags,
         is_published: data.is_published,
-        published_at: data.is_published ? new Date().toISOString() : null,
+        published_at: data.is_published
+          ? (data.published_at ? new Date(data.published_at).toISOString() : new Date().toISOString())
+          : null,
         meta_title: data.meta_title || null,
         meta_description: data.meta_description || null,
       };
@@ -292,11 +309,23 @@ export default function PostForm({ initialData, isEditing = false, categories }:
         </div>
 
         {/* Visibility */}
-        <div className="bg-white rounded-xl border border-[#e5e7eb] p-6">
+        <div className="bg-white rounded-xl border border-[#e5e7eb] p-6 space-y-4">
           <label className="flex items-center gap-3 cursor-pointer">
             <input type="checkbox" checked={data.is_published} onChange={e => setData({ ...data, is_published: e.target.checked })} className="w-4 h-4 accent-brand-terracotta" />
-            <span className="text-sm text-brand-graphite font-medium">Publicar agora</span>
+            <span className="text-sm text-brand-graphite font-medium">Publicar</span>
           </label>
+          {data.is_published && (
+            <div>
+              <label className={labelClass}>Data de publicação</label>
+              <input
+                type="datetime-local"
+                value={data.published_at}
+                onChange={e => setData({ ...data, published_at: e.target.value })}
+                className={inputClass}
+              />
+              <p className="text-xs text-brand-gray/60 mt-1">Data que aparecerá no post publicado</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -27,6 +27,7 @@ export default async function EditPostPage({ params }: Props) {
     category_id: (post.category_id as string) || '',
     tags: (post.tags as string[]) || [],
     is_published: post.is_published as boolean,
+    published_at: (post.published_at as string) || '',
     meta_title: (post.meta_title as string) || '',
     meta_description: (post.meta_description as string) || '',
   };
