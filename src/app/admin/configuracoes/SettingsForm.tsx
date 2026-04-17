@@ -119,7 +119,9 @@ export default function SettingsForm({ initialSettings }: Props) {
 
   // ── Aparência state ──
   const [brandPrimary, setBrandPrimary] = useState(strVal(initialSettings, 'brand_primary_color') || '#C49A6C');
+  const [brandPrimaryDark, setBrandPrimaryDark] = useState(strVal(initialSettings, 'brand_primary_dark_color') || '#b08a5e');
   const [brandBackground, setBrandBackground] = useState(strVal(initialSettings, 'brand_background_color') || '#F5F2EE');
+  const [brandGraphite, setBrandGraphite] = useState(strVal(initialSettings, 'brand_graphite_color') || '#3D3D3D');
 
   // ── Integrações state ──
   const [ga4Id, setGa4Id] = useState(strVal(initialSettings, 'ga4_measurement_id'));
@@ -212,7 +214,9 @@ export default function SettingsForm({ initialSettings }: Props) {
     if (activeTab === 'aparencia') {
       return [
         { key: 'brand_primary_color', value: brandPrimary },
+        { key: 'brand_primary_dark_color', value: brandPrimaryDark },
         { key: 'brand_background_color', value: brandBackground },
+        { key: 'brand_graphite_color', value: brandGraphite },
       ];
     }
     if (activeTab === 'integracoes') {
@@ -337,13 +341,11 @@ export default function SettingsForm({ initialSettings }: Props) {
   // ── Tab button style ──
   function tabStyle(id: TabId) {
     const isActive = activeTab === id;
-    return [
-      'px-4 py-2.5 text-sm font-medium whitespace-nowrap cursor-pointer bg-transparent border-none transition-colors',
-      'border-b-2',
-      isActive
-        ? 'border-[#C49A6C] text-brand-graphite'
-        : 'border-transparent text-brand-gray hover:text-brand-graphite hover:border-[#C49A6C]/40',
-    ].join(' ');
+    return 'px-4 py-2.5 text-sm font-medium whitespace-nowrap cursor-pointer bg-transparent border-none transition-colors border-b-2 ' +
+      (isActive ? 'text-brand-graphite' : 'border-transparent text-brand-gray hover:text-brand-graphite');
+  }
+  function tabInlineStyle(id: TabId) {
+    return activeTab === id ? { borderColor: brandPrimary } : {};
   }
 
   return (
@@ -354,6 +356,7 @@ export default function SettingsForm({ initialSettings }: Props) {
           <button
             key={tab.id}
             className={tabStyle(tab.id)}
+            style={tabInlineStyle(tab.id)}
             onClick={() => {
               setSaveError('');
               setSavedOk(false);
@@ -497,7 +500,8 @@ export default function SettingsForm({ initialSettings }: Props) {
                   type="checkbox"
                   checked={instagramEnabled}
                   onChange={e => setInstagramEnabled(e.target.checked)}
-                  className="w-4 h-4 accent-[#C49A6C]"
+                  className="w-4 h-4"
+                  style={{ accentColor: brandPrimary }}
                 />
                 <span className="text-sm text-brand-graphite">
                   Exibir seção do Instagram na home
@@ -723,6 +727,26 @@ export default function SettingsForm({ initialSettings }: Props) {
             </div>
 
             <div className={fieldClass}>
+              <label className={labelClass}>Cor principal — hover/escura</label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="color"
+                  value={brandPrimaryDark}
+                  onChange={e => setBrandPrimaryDark(e.target.value)}
+                  className="w-10 h-10 rounded border border-[#d1d5db] cursor-pointer p-0.5 bg-white"
+                />
+                <input
+                  type="text"
+                  value={brandPrimaryDark}
+                  onChange={e => setBrandPrimaryDark(e.target.value)}
+                  className={`${inputClass} font-mono text-sm`}
+                  placeholder="#b08a5e"
+                />
+              </div>
+              <p className={helpClass}>Versão escura da cor principal, usada em hover de botões.</p>
+            </div>
+
+            <div className={fieldClass}>
               <label className={labelClass}>Cor de fundo</label>
               <div className="flex items-center gap-2">
                 <input
@@ -742,12 +766,35 @@ export default function SettingsForm({ initialSettings }: Props) {
               <p className={helpClass}>Fundo principal do site.</p>
             </div>
 
+            <div className={fieldClass}>
+              <label className={labelClass}>Cor de texto / grafite</label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="color"
+                  value={brandGraphite}
+                  onChange={e => setBrandGraphite(e.target.value)}
+                  className="w-10 h-10 rounded border border-[#d1d5db] cursor-pointer p-0.5 bg-white"
+                />
+                <input
+                  type="text"
+                  value={brandGraphite}
+                  onChange={e => setBrandGraphite(e.target.value)}
+                  className={`${inputClass} font-mono text-sm`}
+                  placeholder="#3D3D3D"
+                />
+              </div>
+              <p className={helpClass}>Usada em títulos, textos escuros e rodapé.</p>
+            </div>
+
             <div className="mt-4 p-4 rounded-lg border border-[#e5e7eb] bg-gray-50">
               <p className="text-xs font-medium text-brand-gray mb-2">Prévia</p>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full border border-[#d1d5db]" style={{ backgroundColor: brandPrimary }} />
+                <div className="w-8 h-8 rounded-full border border-[#d1d5db]" style={{ backgroundColor: brandPrimaryDark }} />
                 <div className="w-8 h-8 rounded border border-[#d1d5db]" style={{ backgroundColor: brandBackground }} />
+                <div className="w-8 h-8 rounded border border-[#d1d5db]" style={{ backgroundColor: brandGraphite }} />
                 <span className="text-xs px-3 py-1.5 rounded text-white" style={{ backgroundColor: brandPrimary }}>Botão</span>
+                <span className="text-xs px-3 py-1.5 rounded text-white" style={{ backgroundColor: brandPrimaryDark }}>Hover</span>
               </div>
             </div>
           </div>

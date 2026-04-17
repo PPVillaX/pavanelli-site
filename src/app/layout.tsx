@@ -70,7 +70,7 @@ export default async function RootLayout({
     getSeoSettings(),
   ]);
 
-  const styleContent = `:root { --color-brand-terracotta: ${appearance.brand_primary_color || '#C49A6C'}; --color-brand-offwhite: ${appearance.brand_background_color || '#F5F2EE'}; }`;
+  const styleContent = `:root { --color-brand-terracotta: ${appearance.brand_primary_color || '#C49A6C'}; --color-brand-terracotta-dark: ${appearance.brand_primary_dark_color || '#b08a5e'}; --color-brand-offwhite: ${appearance.brand_background_color || '#F5F2EE'}; --color-brand-graphite: ${appearance.brand_graphite_color || '#3D3D3D'}; }`;
 
   const websiteSchema = {
     '@context': 'https://schema.org',
@@ -91,10 +91,10 @@ export default async function RootLayout({
         <style dangerouslySetInnerHTML={{ __html: styleContent }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
       </head>
-      <body className="antialiased">
+      <body className="antialiased min-h-screen flex flex-col">
         <PageTransition />
         <SiteChrome><Header instagramHandle={social.instagram_handle} /></SiteChrome>
-        <main className="pb-16 md:pb-0">{children}</main>
+        <main className="flex-1 pb-16 md:pb-0">{children}</main>
         <SiteChrome><Footer /></SiteChrome>
         <SiteChrome><BottomNav /></SiteChrome>
         <SiteChrome>

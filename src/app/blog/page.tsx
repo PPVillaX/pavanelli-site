@@ -85,19 +85,20 @@ export default async function BlogPage() {
                 href={`/blog/${post.slug}`}
                 className="bg-brand-white rounded overflow-hidden transition-all duration-300 group no-underline hover:-translate-y-1 hover:shadow-lg"
               >
-                {post.cover_image_url ? (
-                  <div
-                    className="h-[200px] bg-cover"
-                    style={{
-                      backgroundImage: `url(${post.cover_image_url})`,
-                      backgroundPosition: post.cover_image_focal_point ?? 'center',
-                    }}
-                  />
-                ) : (
-                  <div className="h-[200px] bg-brand-cream flex items-center justify-center">
-                    <span className="text-brand-terracotta text-3xl">✦</span>
-                  </div>
-                )}
+                <div className="w-full aspect-[16/9] overflow-hidden bg-brand-cream">
+                  {post.cover_image_url ? (
+                    <img
+                      src={post.cover_image_url}
+                      alt={post.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      style={{ objectPosition: post.cover_image_focal_point ?? 'center' }}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="text-brand-terracotta text-3xl">✦</span>
+                    </div>
+                  )}
+                </div>
                 <div className="p-6">
                   {post.blog_categories && (
                     <div className="text-[11px] font-semibold tracking-[0.15em] uppercase text-brand-terracotta mb-3">

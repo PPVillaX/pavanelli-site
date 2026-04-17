@@ -38,7 +38,9 @@ export interface ContentSettings {
 
 export interface AppearanceSettings {
   brand_primary_color: string;
+  brand_primary_dark_color: string;
   brand_background_color: string;
+  brand_graphite_color: string;
 }
 
 export interface ProfileSettings {
@@ -195,11 +197,13 @@ export async function getContentSettings(): Promise<ContentSettings> {
 }
 
 export async function getAppearanceSettings(): Promise<AppearanceSettings> {
-  const keys = ['brand_primary_color', 'brand_background_color'];
+  const keys = ['brand_primary_color', 'brand_primary_dark_color', 'brand_background_color', 'brand_graphite_color'];
   const map = await fetchSettings(keys);
   return {
     brand_primary_color: str(map, 'brand_primary_color') || '#C49A6C',
+    brand_primary_dark_color: str(map, 'brand_primary_dark_color') || '#b08a5e',
     brand_background_color: str(map, 'brand_background_color') || '#F5F2EE',
+    brand_graphite_color: str(map, 'brand_graphite_color') || '#3D3D3D',
   };
 }
 
