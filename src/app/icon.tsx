@@ -8,13 +8,7 @@ export default async function Icon() {
   const seo = await getSeoSettings();
 
   if (seo.favicon_url) {
-    const res = await fetch(seo.favicon_url);
-    if (res.ok) {
-      const buffer = await res.arrayBuffer();
-      return new Response(buffer, {
-        headers: { 'Content-Type': res.headers.get('Content-Type') || 'image/png' },
-      });
-    }
+    return Response.redirect(seo.favicon_url, 302);
   }
 
   // Fallback: generate a "P" letter favicon

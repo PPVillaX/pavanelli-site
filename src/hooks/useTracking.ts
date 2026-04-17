@@ -11,9 +11,24 @@ function getSessionId(): string {
     sessionStorage.setItem(key, id);
     return id;
   } catch {
-    // sessionStorage unavailable (SSR guard); return a temporary id
     return crypto.randomUUID();
   }
+}
+
+type GtagFn = (...args: unknown[]) => void;
+
+function fireGtag(
+  event_type: string,
+  options?: { project_slug?: string; page?: string; metadata?: Record<string, unknown> }
+) {
+  if (typeof window === 'undefined') return;
+  const gtag = (window as Window & { gtag?: GtagFn }).gtag;
+  if (typeof gtag !== 'function') return;
+  gtag('event', event_type, {
+    page_path: options?.page ?? window.location.pathname,
+    ...(options?.project_slug ? { project_slug: options.project_slug } : {}),
+    ...(options?.metadata ?? {}),
+  });
 }
 
 export function useTracking() {
@@ -44,9 +59,9 @@ export function useTracking() {
         project_slug: options?.project_slug,
         metadata: options?.metadata,
       }),
-    }).catch(() => {
-      // Fail silently
-    });
+    }).catch(() => {});
+
+    fireGtag(event_type, options);
   }
 
   return { track };

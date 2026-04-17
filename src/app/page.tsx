@@ -16,9 +16,9 @@ export default async function Home() {
 
   const overlayOpacity = Number(content.featured_overlay_opacity) || 0;
 
-  const heroSlides = heroPhotos.map(p => ({
+  const heroSlides = heroPhotos.map((p, i) => ({
     src: p.url,
-    alt: 'Pavanelli Arquitetura',
+    alt: `Portfólio Pavanelli Arquitetura – foto ${i + 1} de ${heroPhotos.length}`,
     slug: '',
   }));
 

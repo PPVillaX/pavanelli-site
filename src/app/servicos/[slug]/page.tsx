@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getPublishedServices, getServiceBySlug } from '@/lib/queries';
+import { TrackPageView } from '@/components/TrackPageView';
 
 export const revalidate = 60;
 
@@ -77,6 +78,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <TrackPageView event="service_view" params={{ slug: service.slug }} />
 
       <div className="px-6 md:px-[60px] py-20 md:py-[120px]">
         <article className="max-w-[720px] mx-auto">

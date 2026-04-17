@@ -46,6 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: {
       canonical: '/',
     },
+    icons: seo.favicon_url ? { icon: seo.favicon_url } : undefined,
     openGraph: {
       type: 'website',
       locale: 'pt_BR',
