@@ -79,7 +79,7 @@ export default function HomeClient({
             <Link
               href="/portfolio"
               onClick={() => track('portfolio_cta_click', { page: '/' })}
-              className="inline-block border-2 border-brand-graphite text-brand-graphite px-10 py-4 text-[13px] font-semibold tracking-[0.1em] uppercase no-underline rounded transition-all duration-300 hover:bg-brand-graphite hover:text-white"
+              className="inline-block border-2 border-brand-terracotta text-brand-terracotta px-10 py-4 text-[13px] font-semibold tracking-[0.1em] uppercase no-underline rounded transition-all duration-300 hover:bg-brand-terracotta hover:text-white"
             >
               Ver todos os projetos
             </Link>

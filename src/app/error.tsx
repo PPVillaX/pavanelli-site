@@ -26,7 +26,7 @@ export default function Error({
           </button>
           <a
             href="/"
-            className="bg-transparent border-2 border-brand-graphite text-brand-graphite px-8 py-3 text-[13px] font-semibold tracking-[0.1em] uppercase rounded no-underline transition-all hover:bg-brand-graphite hover:text-brand-white"
+            className="bg-transparent border-2 border-brand-terracotta text-brand-terracotta px-8 py-3 text-[13px] font-semibold tracking-[0.1em] uppercase rounded no-underline transition-all hover:bg-brand-terracotta hover:text-white"
           >
             Página inicial
           </a>

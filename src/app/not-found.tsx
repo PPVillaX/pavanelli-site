@@ -22,7 +22,7 @@ export default function NotFound() {
           </Link>
           <Link
             href="/portfolio"
-            className="inline-block border-2 border-brand-graphite text-brand-graphite px-8 py-3 text-[13px] font-semibold tracking-[0.1em] uppercase no-underline rounded transition-all duration-300 hover:bg-brand-graphite hover:text-white"
+            className="inline-block border-2 border-brand-terracotta text-brand-terracotta px-8 py-3 text-[13px] font-semibold tracking-[0.1em] uppercase no-underline rounded transition-all duration-300 hover:bg-brand-terracotta hover:text-white"
           >
             Portfólio
           </Link>

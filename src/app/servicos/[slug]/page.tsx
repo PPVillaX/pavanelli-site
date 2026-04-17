@@ -128,7 +128,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </p>
               <Link
                 href={`/portfolio?category=${service.category_filter}`}
-                className="inline-block border-2 border-brand-graphite text-brand-graphite px-8 py-3 text-[13px] font-semibold tracking-[0.1em] uppercase no-underline rounded transition-all duration-300 hover:bg-brand-graphite hover:text-white"
+                className="inline-block border-2 border-brand-terracotta text-brand-terracotta px-8 py-3.5 text-[13px] font-semibold tracking-[0.1em] uppercase no-underline rounded transition-all duration-300 hover:bg-brand-terracotta hover:text-white"
               >
                 Ver portfólio →
               </Link>
@@ -155,7 +155,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </Link>
               <Link
                 href="/portfolio"
-                className="inline-block border-2 border-brand-graphite text-brand-graphite px-8 py-3.5 text-[13px] font-semibold tracking-[0.1em] uppercase no-underline rounded transition-all duration-300 hover:bg-brand-graphite hover:text-white"
+                className="inline-block border-2 border-brand-terracotta text-brand-terracotta px-8 py-3.5 text-[13px] font-semibold tracking-[0.1em] uppercase no-underline rounded transition-all duration-300 hover:bg-brand-terracotta hover:text-white"
               >
                 Ver portfólio
               </Link>

@@ -162,16 +162,16 @@ export default async function BlogPostPage({ params }: Props) {
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
               <Link
-                href="/portfolio"
+                href="/contato"
                 className="inline-block bg-brand-terracotta text-white px-8 py-3.5 text-[13px] font-semibold tracking-[0.1em] uppercase no-underline rounded transition-all duration-300 hover:bg-brand-terracotta-dark hover:-translate-y-0.5"
               >
-                Ver portfólio
+                Fale conosco
               </Link>
               <Link
-                href="/contato"
-                className="inline-block border-2 border-brand-graphite text-brand-graphite px-8 py-3.5 text-[13px] font-semibold tracking-[0.1em] uppercase no-underline rounded transition-all duration-300 hover:bg-brand-graphite hover:text-white"
+                href="/portfolio"
+                className="inline-block border-2 border-brand-terracotta text-brand-terracotta px-8 py-3.5 text-[13px] font-semibold tracking-[0.1em] uppercase no-underline rounded transition-all duration-300 hover:bg-brand-terracotta hover:text-white"
               >
-                Fale conosco
+                Ver portfólio
               </Link>
             </div>
           </div>
