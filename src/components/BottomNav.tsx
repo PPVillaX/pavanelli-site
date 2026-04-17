@@ -27,6 +27,16 @@ const navItems = [
     ),
   },
   {
+    href: '/servicos',
+    label: 'Serviços',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="7" width="16" height="11" rx="1" />
+        <path d="M6 7V5a4 4 0 018 0v2" />
+      </svg>
+    ),
+  },
+  {
     href: '/blog',
     label: 'Blog',
     icon: (

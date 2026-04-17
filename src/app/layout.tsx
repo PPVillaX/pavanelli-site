@@ -87,7 +87,8 @@ export default async function RootLayout({
   return (
     <html lang="pt-BR" className={`${inter.variable} ${dmSans.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fgssgugdoatfchtcrlpa.supabase.co" />
+        <link rel="preconnect" href="https://fgssgugdoatfchtcrlpa.supabase.co" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fgssgugdoatfchtcrlpa.supabase.co" />
         <style dangerouslySetInnerHTML={{ __html: styleContent }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
       </head>

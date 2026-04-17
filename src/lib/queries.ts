@@ -3,8 +3,8 @@ import 'server-only';
 // ─── Types ───────────────────────────────────────────────────────
 // Types live in lib/types.ts (safe for client and server imports).
 // Re-exported here for server-component convenience.
-import type { ProjectWithImages, DbBlogPost } from './types';
-export type { ProjectWithImages, DbBlogPost, DbContact, ProjectImage } from './types';
+import type { ProjectWithImages, DbBlogPost, DbService } from './types';
+export type { ProjectWithImages, DbBlogPost, DbContact, ProjectImage, DbService } from './types';
 
 // ─── Raw PostgREST helper ─────────────────────────────────────────
 
@@ -211,4 +211,34 @@ export async function getHeroPhotos(): Promise<HeroPhoto[]> {
     '/rest/v1/hero_photos?select=*&order=display_order.asc,created_at.asc',
     ADMIN_REVALIDATE
   )) ?? [];
+}
+
+// ─── Services ─────────────────────────────────────────────────────────────────
+
+export async function getPublishedServices(): Promise<DbService[]> {
+  return (await pgrest<DbService[]>(
+    '/rest/v1/services?is_active=eq.true&order=display_order.asc,created_at.asc',
+  )) ?? [];
+}
+
+export async function getAllServices(): Promise<DbService[]> {
+  return (await pgrest<DbService[]>(
+    '/rest/v1/services?select=*&order=display_order.asc,created_at.asc',
+    ADMIN_REVALIDATE,
+  )) ?? [];
+}
+
+export async function getServiceBySlug(slug: string): Promise<DbService | null> {
+  const arr = await pgrest<DbService[]>(
+    `/rest/v1/services?slug=eq.${encodeURIComponent(slug)}&is_active=eq.true&limit=1`,
+  );
+  return arr?.[0] ?? null;
+}
+
+export async function getServiceById(id: string): Promise<DbService | null> {
+  const arr = await pgrest<DbService[]>(
+    `/rest/v1/services?id=eq.${encodeURIComponent(id)}&limit=1`,
+    ADMIN_REVALIDATE,
+  );
+  return arr?.[0] ?? null;
 }

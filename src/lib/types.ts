@@ -48,6 +48,23 @@ export interface DbBlogPost {
   blog_categories: { name: string; slug: string } | null;
 }
 
+export interface DbService {
+  id: string;
+  title: string;
+  slug: string;
+  tagline: string | null;
+  content: string | null;
+  cover_image_url: string | null;
+  cover_image_focal_point: string | null;
+  category_filter: string | null;
+  display_order: number;
+  is_active: boolean;
+  meta_title: string | null;
+  meta_description: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface DbContact {
   id: string;
   name: string;

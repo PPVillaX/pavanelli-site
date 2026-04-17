@@ -14,12 +14,14 @@ import {
   Clapperboard,
   Tag,
   Settings,
+  Briefcase,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 const navItems: { href: string; label: string; Icon: LucideIcon }[] = [
   { href: '/admin', label: 'Dashboard', Icon: LayoutDashboard },
   { href: '/admin/projetos', label: 'Projetos', Icon: Blocks },
+  { href: '/admin/servicos', label: 'Serviços', Icon: Briefcase },
   { href: '/admin/posts', label: 'Blog', Icon: FileText },
   { href: '/admin/mensagens', label: 'Mensagens', Icon: Mail },
   { href: '/admin/analytics', label: 'Analytics', Icon: TrendingUp },
