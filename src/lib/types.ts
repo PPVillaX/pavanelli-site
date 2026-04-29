@@ -74,3 +74,24 @@ export interface DbContact {
   is_read: boolean;
   created_at: string;
 }
+
+export interface DbLocation {
+  id: string;
+  slug: string;
+  name: string;
+  type: 'bairro' | 'empreendimento';
+  subtype: string | null;
+  city: string;
+  intro: string | null;
+  content: string | null;
+  match_keys: string[];
+  parent_location_id: string | null;
+  cover_image_url: string | null;
+  cover_image_focal_point: string | null;
+  meta_title: string | null;
+  meta_description: string | null;
+  display_order: number;
+  is_published: boolean;
+  created_at: string;
+  updated_at: string;
+}

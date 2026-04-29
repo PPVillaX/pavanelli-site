@@ -3,8 +3,8 @@ import 'server-only';
 // ─── Types ───────────────────────────────────────────────────────
 // Types live in lib/types.ts (safe for client and server imports).
 // Re-exported here for server-component convenience.
-import type { ProjectWithImages, DbBlogPost, DbService } from './types';
-export type { ProjectWithImages, DbBlogPost, DbContact, ProjectImage, DbService } from './types';
+import type { ProjectWithImages, DbBlogPost, DbService, DbLocation } from './types';
+export type { ProjectWithImages, DbBlogPost, DbContact, ProjectImage, DbService, DbLocation } from './types';
 
 // ─── Raw PostgREST helper ─────────────────────────────────────────
 
@@ -242,4 +242,56 @@ export async function getServiceById(id: string): Promise<DbService | null> {
     ADMIN_REVALIDATE,
   );
   return arr?.[0] ?? null;
+}
+
+// ─── Locations (bairros e empreendimentos) ───────────────────────────────────
+
+export async function getPublishedLocations(): Promise<DbLocation[]> {
+  return (await pgrest<DbLocation[]>(
+    '/rest/v1/locations?is_published=eq.true&order=type.asc,display_order.asc,name.asc',
+  )) ?? [];
+}
+
+export async function getAllLocations(): Promise<DbLocation[]> {
+  return (await pgrest<DbLocation[]>(
+    '/rest/v1/locations?select=*&order=type.asc,display_order.asc,name.asc',
+    ADMIN_REVALIDATE,
+  )) ?? [];
+}
+
+export async function getLocationBySlug(slug: string): Promise<DbLocation | null> {
+  const arr = await pgrest<DbLocation[]>(
+    `/rest/v1/locations?slug=eq.${encodeURIComponent(slug)}&is_published=eq.true&limit=1`,
+  );
+  return arr?.[0] ?? null;
+}
+
+export async function getLocationById(id: string): Promise<DbLocation | null> {
+  const arr = await pgrest<DbLocation[]>(
+    `/rest/v1/locations?id=eq.${encodeURIComponent(id)}&limit=1`,
+    ADMIN_REVALIDATE,
+  );
+  return arr?.[0] ?? null;
+}
+
+/**
+ * Filtra projetos cuja `project.location` contém qualquer uma das match_keys
+ * (case insensitive). Usado pela página /uberlandia/[slug] para listar projetos
+ * automaticamente sem precisar associar manualmente cada projeto a uma location.
+ */
+export function filterProjectsByLocationMatchKeys(
+  projects: ProjectWithImages[],
+  matchKeys: string[],
+): ProjectWithImages[] {
+  if (!matchKeys || matchKeys.length === 0) return [];
+  const normalized = matchKeys
+    .map(k => k.trim().toLowerCase())
+    .filter(Boolean);
+  if (normalized.length === 0) return [];
+
+  return projects.filter(p => {
+    const loc = p.location?.toLowerCase() ?? '';
+    if (!loc) return false;
+    return normalized.some(key => loc.includes(key));
+  });
 }

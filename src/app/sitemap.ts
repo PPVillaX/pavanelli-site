@@ -1,13 +1,19 @@
 import type { MetadataRoute } from 'next';
-import { getPublishedProjects, getPublishedPosts, getPublishedServices } from '@/lib/queries';
+import {
+  getPublishedProjects,
+  getPublishedPosts,
+  getPublishedServices,
+  getPublishedLocations,
+} from '@/lib/queries';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [projects, posts, services] = await Promise.all([
+  const [projects, posts, services, locations] = await Promise.all([
     getPublishedProjects(),
     getPublishedPosts().catch(() => []),
     getPublishedServices().catch(() => []),
+    getPublishedLocations().catch(() => []),
   ]);
 
   const staticPages: MetadataRoute.Sitemap = [
@@ -40,5 +46,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...projectPages, ...servicePages, ...postPages];
+  // Páginas de localização (bairros e empreendimentos): /uberlandia/[slug]
+  // Prioridade alta porque são landing pages de SEO local com alta intenção comercial.
+  const locationPages: MetadataRoute.Sitemap = locations.map(l => ({
+    url: `${BASE_URL}/uberlandia/${l.slug}`,
+    lastModified: new Date(l.updated_at),
+    changeFrequency: 'monthly' as const,
+    priority: 0.85,
+  }));
+
+  return [
+    ...staticPages,
+    ...projectPages,
+    ...servicePages,
+    ...postPages,
+    ...locationPages,
+  ];
 }
