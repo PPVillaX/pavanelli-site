@@ -69,10 +69,11 @@ export default async function ServiceDetailPage({ params }: Props) {
     '@type': 'Service',
     name: service.title,
     description: service.tagline || service.meta_description || undefined,
+    // Refere o LocalBusiness/Architect declarado em LocalBusinessJsonLd (home).
+    // Usar @id evita duplicação de campos (telephone, address, priceRange, image)
+    // e consolida a entidade num único nó canônico para o Google.
     provider: {
-      '@type': 'LocalBusiness',
-      name: 'Pavanelli Arquitetura',
-      url: siteUrl,
+      '@id': `${siteUrl}/#organization`,
     },
     areaServed: {
       '@type': 'City',

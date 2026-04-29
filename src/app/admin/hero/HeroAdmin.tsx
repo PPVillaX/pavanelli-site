@@ -114,6 +114,25 @@ export default function HeroAdmin({ initialPhotos }: Props) {
     }
   }
 
+  async function handleAltChange(photoId: string, value: string) {
+    // Atualização otimista local
+    setPhotos(prev => prev.map(p => p.id === photoId ? { ...p, alt_text: value } : p));
+  }
+
+  async function handleAltBlur(photo: HeroPhoto) {
+    // Persiste no banco apenas no blur para evitar 1 request por tecla
+    try {
+      const { error: updateError } = await supabase
+        .from('hero_photos')
+        .update({ alt_text: photo.alt_text || null })
+        .eq('id', photo.id);
+      if (updateError) throw new Error(updateError.message);
+      await fetch('/api/revalidate', { method: 'POST' });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao salvar alt text.');
+    }
+  }
+
   async function handleMove(index: number, direction: 'up' | 'down') {
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
     if (targetIndex < 0 || targetIndex >= photos.length) return;
@@ -186,49 +205,66 @@ export default function HeroAdmin({ initialPhotos }: Props) {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {photos.map((photo, index) => (
-            <div key={photo.id} className="relative group">
-              <div className="aspect-video rounded overflow-hidden bg-gray-100">
-                <img
-                  src={photo.url}
-                  alt=""
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            <div key={photo.id} className="flex flex-col gap-2">
+              <div className="relative group">
+                <div className="aspect-video rounded overflow-hidden bg-gray-100">
+                  <img
+                    src={photo.url}
+                    alt={photo.alt_text || ''}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
 
-              {/* Overlay with actions */}
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded flex flex-col items-center justify-center gap-2">
-                <div className="flex gap-1">
+                {/* Overlay with actions */}
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded flex flex-col items-center justify-center gap-2">
+                  <div className="flex gap-1">
+                    <button
+                      onClick={() => handleMove(index, 'up')}
+                      disabled={index === 0}
+                      className="w-8 h-8 bg-white/90 rounded text-brand-graphite text-xs font-bold disabled:opacity-30 hover:bg-white transition-colors cursor-pointer"
+                      title="Mover para cima"
+                    >
+                      ←
+                    </button>
+                    <button
+                      onClick={() => handleMove(index, 'down')}
+                      disabled={index === photos.length - 1}
+                      className="w-8 h-8 bg-white/90 rounded text-brand-graphite text-xs font-bold disabled:opacity-30 hover:bg-white transition-colors cursor-pointer"
+                      title="Mover para baixo"
+                    >
+                      →
+                    </button>
+                  </div>
+
                   <button
-                    onClick={() => handleMove(index, 'up')}
-                    disabled={index === 0}
-                    className="w-8 h-8 bg-white/90 rounded text-brand-graphite text-xs font-bold disabled:opacity-30 hover:bg-white transition-colors cursor-pointer"
-                    title="Mover para cima"
+                    onClick={() => handleDelete(photo)}
+                    disabled={deletingId === photo.id}
+                    className="w-8 h-8 bg-red-500/90 rounded text-white text-xs hover:bg-red-600 transition-colors cursor-pointer disabled:opacity-50"
+                    title="Remover"
                   >
-                    ←
-                  </button>
-                  <button
-                    onClick={() => handleMove(index, 'down')}
-                    disabled={index === photos.length - 1}
-                    className="w-8 h-8 bg-white/90 rounded text-brand-graphite text-xs font-bold disabled:opacity-30 hover:bg-white transition-colors cursor-pointer"
-                    title="Mover para baixo"
-                  >
-                    →
+                    {deletingId === photo.id ? '…' : '✕'}
                   </button>
                 </div>
 
-                <button
-                  onClick={() => handleDelete(photo)}
-                  disabled={deletingId === photo.id}
-                  className="w-8 h-8 bg-red-500/90 rounded text-white text-xs hover:bg-red-600 transition-colors cursor-pointer disabled:opacity-50"
-                  title="Remover"
-                >
-                  {deletingId === photo.id ? '…' : '✕'}
-                </button>
+                <span className="absolute top-1.5 left-1.5 bg-black/60 text-white text-[10px] px-1.5 py-0.5 rounded font-mono">
+                  {index + 1}
+                </span>
               </div>
 
-              <span className="absolute top-1.5 left-1.5 bg-black/60 text-white text-[10px] px-1.5 py-0.5 rounded font-mono">
-                {index + 1}
-              </span>
+              <div>
+                <label className="block text-[11px] font-medium text-brand-gray mb-1">
+                  Alt text (acessibilidade e SEO)
+                </label>
+                <input
+                  type="text"
+                  value={photo.alt_text || ''}
+                  onChange={(e) => handleAltChange(photo.id, e.target.value)}
+                  onBlur={() => handleAltBlur(photo)}
+                  placeholder="Ex: Casa 70, residência contemporânea em Uberlândia"
+                  maxLength={125}
+                  className="w-full text-xs border border-gray-200 rounded px-2 py-1.5 focus:outline-none focus:border-brand-terracotta"
+                />
+              </div>
             </div>
           ))}
         </div>

@@ -16,9 +16,13 @@ export default async function Home() {
 
   const overlayOpacity = Number(content.featured_overlay_opacity) || 0;
 
+  // Prefere o alt_text descritivo do banco quando disponível.
+  // Caso contrário, usa um fallback ainda local-rico (melhor que "foto X de Y").
   const heroSlides = heroPhotos.map((p, i) => ({
     src: p.url,
-    alt: `Portfólio Pavanelli Arquitetura – foto ${i + 1} de ${heroPhotos.length}`,
+    alt:
+      p.alt_text?.trim() ||
+      `Projeto de arquitetura em Uberlândia por Pavanelli Arquitetura, imagem ${i + 1} de ${heroPhotos.length}`,
     slug: '',
   }));
 

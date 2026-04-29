@@ -204,6 +204,7 @@ export interface HeroPhoto {
   storage_path: string;
   display_order: number;
   created_at: string;
+  alt_text: string | null;
 }
 
 export async function getHeroPhotos(): Promise<HeroPhoto[]> {
