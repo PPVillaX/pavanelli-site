@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getPublishedServices, getServiceBySlug } from '@/lib/queries';
 import { TrackPageView } from '@/components/TrackPageView';
+import { extractFAQs, buildFAQPageJsonLd } from '@/lib/extract-faqs';
 
 export const revalidate = 60;
 
@@ -94,10 +95,18 @@ export default async function ServiceDetailPage({ params }: Props) {
     ],
   };
 
+  // Detecta seção "Perguntas frequentes" no conteúdo do serviço
+  // (mesma convenção dos posts de blog) e emite FAQPage schema.
+  const faqs = extractFAQs(service.content);
+  const faqJsonLd = faqs.length > 0 ? buildFAQPageJsonLd(faqs) : null;
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      {faqJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      )}
       <TrackPageView event="service_view" params={{ slug: service.slug }} />
 
       <div className="px-6 md:px-[60px] py-20 md:py-[120px]">
