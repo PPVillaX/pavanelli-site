@@ -55,9 +55,14 @@ export default function HeroSlideshow({ slides, title, subtitle }: HeroSlideshow
       ))}
 
       <div className="absolute bottom-16 md:bottom-[100px] left-6 md:left-[60px] right-6 md:right-[60px] text-white z-10">
-        <h1 className="font-display text-[32px] md:text-[56px] font-bold leading-[1.1] mb-4 tracking-tight">
+        {/*
+          Visualmente este é o título principal, mas semanticamente é um H2.
+          O H1 da página está em src/app/page.tsx (sr-only) com a keyword principal,
+          para não conflitar com a declaração de marca exibida aqui.
+        */}
+        <h2 className="font-display text-[32px] md:text-[56px] font-bold leading-[1.1] mb-4 tracking-tight">
           {title}
-        </h1>
+        </h2>
         <p className="text-base md:text-lg font-light opacity-85 max-w-[500px] leading-relaxed">
           {subtitle}
         </p>

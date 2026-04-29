@@ -25,6 +25,15 @@ export default async function Home() {
   return (
     <>
       <LocalBusinessJsonLd />
+      {/*
+        H1 visualmente oculto (sr-only) com a keyword principal da página.
+        O hero da slideshow exibe a declaração de marca como H2, preservando o visual.
+        Esta é uma técnica padrão de acessibilidade e SEO: o Googlebot e leitores de tela
+        leem o H1 normalmente, sem alterar a aparência da página.
+      */}
+      <h1 className="sr-only">
+        Pavanelli Arquitetura: arquitetura residencial e comercial em Uberlândia, MG
+      </h1>
       <HomeClient
         profileBioIntro={profile.sobre_bio_intro}
         profileName={profile.sobre_name}
