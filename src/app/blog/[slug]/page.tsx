@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getPostBySlug, getPublishedPosts } from '@/lib/queries';
 import { BreadcrumbJsonLd } from '@/components/JsonLdProject';
+import { extractFAQs, buildFAQPageJsonLd } from '@/lib/extract-faqs';
 
 export const revalidate = 60;
 
@@ -85,6 +86,11 @@ export default async function BlogPostPage({ params }: Props) {
     { name: post.title, url: `${siteUrl}/blog/${post.slug}` },
   ];
 
+  // Detecta seção "Perguntas frequentes" no conteúdo e emite FAQPage schema
+  // se houver pelo menos uma Q&A bem-formada. Captura PAA do Google.
+  const faqs = extractFAQs(post.content);
+  const faqJsonLd = faqs.length > 0 ? buildFAQPageJsonLd(faqs) : null;
+
   return (
     <>
       <script
@@ -92,6 +98,12 @@ export default async function BlogPostPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <BreadcrumbJsonLd items={breadcrumbItems} />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
 
       <div className="px-6 md:px-[60px] py-20 md:py-[120px]">
         <article className="max-w-[720px] mx-auto">
