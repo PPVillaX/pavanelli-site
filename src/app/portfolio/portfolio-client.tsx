@@ -37,12 +37,12 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
       </ScrollReveal>
       <ScrollReveal delay={100}>
         <h1 className="font-display text-[32px] md:text-[48px] font-bold text-brand-graphite leading-[1.1] mb-6 tracking-tight">
-          Projetos selecionados
+          Portfólio de Arquitetura em Uberlândia
         </h1>
       </ScrollReveal>
       <ScrollReveal delay={200}>
         <p className="text-[17px] text-brand-gray max-w-[600px] leading-relaxed font-light">
-          Cada projeto carrega uma identidade única — sólida, contemporânea e com a brasilidade que define o nosso trabalho.
+          Projetos selecionados da Pavanelli Arquitetura. Cada um carrega uma identidade própria, sólida, contemporânea e com a brasilidade que define o nosso trabalho.
         </p>
       </ScrollReveal>
 

@@ -5,25 +5,25 @@ import { getProfileSettings } from '@/lib/settings';
 
 export const metadata: Metadata = {
   title: 'Sobre',
-  description: 'Conheça Antônio Pavanelli — arquiteto formado em Uberlândia com pós-graduação em Barcelona. Mais de 13 anos de experiência em projetos residenciais, comerciais e fazendas.',
+  description: 'Antônio Pavanelli, arquiteto formado em Uberlândia com pós-graduação em Barcelona. Mais de 13 anos em projetos residenciais, comerciais e fazendas.',
   alternates: { canonical: '/sobre' },
   openGraph: {
     title: 'Sobre | Pavanelli Arquitetura',
-    description: 'Conheça Antônio Pavanelli — arquiteto formado em Uberlândia com pós-graduação em Barcelona. Mais de 13 anos de experiência em projetos residenciais, comerciais e fazendas.',
+    description: 'Antônio Pavanelli, arquiteto formado em Uberlândia com pós-graduação em Barcelona. Mais de 13 anos em projetos residenciais, comerciais e fazendas.',
     url: '/sobre',
     type: 'profile',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Sobre | Pavanelli Arquitetura',
-    description: 'Conheça Antônio Pavanelli — arquiteto formado em Uberlândia com pós-graduação em Barcelona. Mais de 13 anos de experiência em projetos residenciais, comerciais e fazendas.',
+    description: 'Antônio Pavanelli, arquiteto formado em Uberlândia com pós-graduação em Barcelona. Mais de 13 anos em projetos residenciais, comerciais e fazendas.',
   },
 };
 
 export default async function SobrePage() {
   const profile = await getProfileSettings();
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pavanelliarquitetura.com.br';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -66,7 +66,7 @@ export default async function SobrePage() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <h1 className="font-display text-[32px] md:text-[48px] font-bold text-brand-graphite leading-[1.1] mb-6 tracking-tight">
-            {profile.sobre_name}
+            {profile.sobre_name}, Arquiteto em Uberlândia
           </h1>
         </ScrollReveal>
         <ScrollReveal delay={200}>

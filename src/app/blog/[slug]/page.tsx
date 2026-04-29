@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPostBySlug(slug);
   if (!post) return {};
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pavanelliarquitetura.com.br';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
   const canonicalUrl = `${siteUrl}/blog/${post.slug}`;
   const ogImage = post.cover_image_url || undefined;
 
@@ -50,7 +50,7 @@ export default async function BlogPostPage({ params }: Props) {
   const post = await getPostBySlug(slug);
   if (!post) notFound();
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pavanelliarquitetura.com.br';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
 
   const wordCount = (post.content ?? '').replace(/<[^>]*>/g, '').trim().split(/\s+/).filter(Boolean).length;
   const readingTime = Math.max(1, Math.ceil(wordCount / 200));

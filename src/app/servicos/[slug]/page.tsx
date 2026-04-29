@@ -20,20 +20,39 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = await getServiceBySlug(slug);
   if (!service) return {};
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pavanelliarquitetura.com.br';
-  const title = service.meta_title || `${service.title} | Arquiteto Uberlândia`;
-  const description = service.meta_description || service.tagline || `${service.title} em Uberlândia com a Pavanelli Arquitetura. Do conceito à obra com identidade única.`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
+
+  // If meta_title from DB is provided, use it as-is (absolute) to bypass the layout template
+  // and avoid the previous bug where the brand suffix was being concatenated twice.
+  // Otherwise fall back to just the service title; the layout template will append the brand.
+  const title = service.meta_title
+    ? { absolute: service.meta_title }
+    : service.title;
+
+  // Plain string used for OG/Twitter (these don't pass through the layout template).
+  const titleStr = service.meta_title || `${service.title} | Pavanelli Arquitetura`;
+
+  const description =
+    service.meta_description ||
+    service.tagline ||
+    `${service.title} em Uberlândia com a Pavanelli Arquitetura. Do conceito à obra com identidade única.`;
 
   return {
     title,
     description,
     alternates: { canonical: `/servicos/${service.slug}` },
     openGraph: {
-      title: `${title} | Pavanelli Arquitetura`,
+      title: titleStr,
       description,
       url: `${siteUrl}/servicos/${service.slug}`,
       type: 'website',
       images: service.cover_image_url ? [{ url: service.cover_image_url, alt: service.title }] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: titleStr,
+      description,
+      images: service.cover_image_url ? [service.cover_image_url] : [],
     },
   };
 }
@@ -43,7 +62,7 @@ export default async function ServiceDetailPage({ params }: Props) {
   const service = await getServiceBySlug(slug);
   if (!service) notFound();
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pavanelliarquitetura.com.br';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
 
   const jsonLd = {
     '@context': 'https://schema.org',

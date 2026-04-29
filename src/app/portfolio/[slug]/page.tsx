@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = await getProjectBySlugFromDB(slug);
   if (!project) return {};
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pavanelliarquitetura.com.br';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
   const canonicalUrl = `${siteUrl}/portfolio/${project.slug}`;
   const ogImage = project.cover_image_url || undefined;
 

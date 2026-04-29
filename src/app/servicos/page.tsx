@@ -5,14 +5,19 @@ import { getPublishedServices } from '@/lib/queries';
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: 'Serviços',
-  description: 'Arquitetura residencial, comercial e fazendas em Uberlândia. Conheça os serviços da Pavanelli Arquitetura — do conceito à obra.',
+  title: 'Serviços de Arquitetura em Uberlândia',
+  description: 'Arquitetura residencial, comercial e para fazendas em Uberlândia. Conheça os serviços da Pavanelli Arquitetura, do conceito à obra.',
   alternates: { canonical: '/servicos' },
   openGraph: {
-    title: 'Serviços | Pavanelli Arquitetura',
-    description: 'Projetos residenciais, comerciais e fazendas com identidade única. Arquiteto em Uberlândia.',
+    title: 'Serviços de Arquitetura em Uberlândia | Pavanelli Arquitetura',
+    description: 'Projetos residenciais, comerciais e para fazendas com identidade única. Arquiteto em Uberlândia.',
     url: '/servicos',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Serviços de Arquitetura em Uberlândia | Pavanelli Arquitetura',
+    description: 'Projetos residenciais, comerciais e para fazendas com identidade única. Arquiteto em Uberlândia.',
   },
 };
 
@@ -26,7 +31,7 @@ export default async function ServicosPage() {
     itemListElement: services.map((s, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      url: `https://pavanelliarquitetura.com.br/servicos/${s.slug}`,
+      url: `https://www.pavanelliarquitetura.com.br/servicos/${s.slug}`,
       name: s.title,
     })),
   };

@@ -37,7 +37,7 @@ export default function ProjectDetailClient({ project, prev, next, phone, defaul
 
   const sortedImages = [...(project.project_images || [])].sort((a, b) => a.display_order - b.display_order);
   const imageUrls = sortedImages.map(img => img.image_url);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pavanelliarquitetura.com.br';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
 
   const ctaMessage = defaultMessage
     ? defaultMessage

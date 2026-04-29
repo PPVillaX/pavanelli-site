@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { getPublishedProjects, getPublishedPosts, getPublishedServices } from '@/lib/queries';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://pavanelliarquitetura.com.br';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [projects, posts, services] = await Promise.all([

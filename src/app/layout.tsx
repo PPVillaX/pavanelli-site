@@ -23,7 +23,7 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://pavanelliarquitetura.com.br';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoSettings();
@@ -35,14 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${seo.site_name || 'Pavanelli Arquitetura + Interiores'}`,
     },
     description: seo.site_description ||
-      'Escritório de arquitetura em Uberlândia especializado em projetos residenciais, comerciais e fazendas. Brasilidade, contemporaneidade e personalidade em cada projeto.',
-    keywords: [
-      'arquiteto em uberlândia',
-      'escritório de arquitetura uberlândia',
-      'projeto residencial uberlândia',
-      'arquiteto interiores uberlândia',
-      'pavanelli arquitetura',
-    ],
+      'Arquitetura residencial, comercial e fazendas em Uberlândia. Projetos com identidade, brasilidade e contemporaneidade. Conheça o portfólio.',
     alternates: {
       canonical: '/',
     },

@@ -5,18 +5,18 @@ import { getContactSettings, getSocialSettings, getSeoSettings } from '@/lib/set
 
 export const metadata: Metadata = {
   title: 'Contato',
-  description: 'Entre em contato com a Pavanelli Arquitetura. Escritório em Uberlândia, MG — Gávea Business, sala 330. WhatsApp, e-mail e formulário de contato.',
+  description: 'Fale com a Pavanelli Arquitetura. Escritório em Uberlândia, MG, no Gávea Business, sala 330. WhatsApp, e-mail e formulário de contato.',
   alternates: { canonical: '/contato' },
   openGraph: {
     title: 'Contato | Pavanelli Arquitetura',
-    description: 'Entre em contato com a Pavanelli Arquitetura. Escritório em Uberlândia, MG.',
+    description: 'Fale com a Pavanelli Arquitetura. Escritório em Uberlândia, MG.',
     url: '/contato',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Contato | Pavanelli Arquitetura',
-    description: 'Entre em contato com a Pavanelli Arquitetura. Escritório em Uberlândia, MG.',
+    description: 'Fale com a Pavanelli Arquitetura. Escritório em Uberlândia, MG.',
   },
 };
 
@@ -27,7 +27,7 @@ export default async function ContatoPage() {
     getSeoSettings(),
   ]);
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pavanelliarquitetura.com.br';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
   const contactSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -64,12 +64,12 @@ export default async function ContatoPage() {
       </ScrollReveal>
       <ScrollReveal delay={100}>
         <h1 className="font-display text-[32px] md:text-[48px] font-bold text-white leading-[1.1] mb-6 tracking-tight">
-          Vamos conversar sobre<br />o seu projeto
+          Fale com a Pavanelli Arquitetura<br />em Uberlândia
         </h1>
       </ScrollReveal>
       <ScrollReveal delay={200}>
         <p className="text-[17px] text-white/60 max-w-[600px] leading-relaxed font-light">
-          Estamos prontos para transformar suas ideias em espaços com identidade.
+          Vamos conversar sobre o seu projeto. Estamos prontos para transformar suas ideias em espaços com identidade.
         </p>
       </ScrollReveal>
 

@@ -1,6 +1,6 @@
 import type { ProjectWithImages } from '@/lib/types';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://pavanelliarquitetura.com.br';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
 
 export function ImageGalleryJsonLd({ project, siteName }: { project: ProjectWithImages; siteName?: string }) {
   const sortedImages = [...(project.project_images || [])].sort(

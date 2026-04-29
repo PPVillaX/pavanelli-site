@@ -4,19 +4,19 @@ import ScrollReveal from '@/components/ScrollReveal';
 import { getPublishedPosts } from '@/lib/queries';
 
 export const metadata: Metadata = {
-  title: 'Blog',
-  description: 'Reflexões sobre arquitetura, materiais, processo criativo e tendências. Pavanelli Arquitetura — Uberlândia.',
+  title: 'Blog de Arquitetura em Uberlândia',
+  description: 'Reflexões sobre arquitetura, materiais, processo criativo e tendências. Acompanhe o blog da Pavanelli Arquitetura, em Uberlândia.',
   alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'Blog | Pavanelli Arquitetura',
-    description: 'Reflexões sobre arquitetura, materiais, processo criativo e tendências. Pavanelli Arquitetura — Uberlândia.',
+    title: 'Blog de Arquitetura em Uberlândia | Pavanelli Arquitetura',
+    description: 'Reflexões sobre arquitetura, materiais, processo criativo e tendências. Acompanhe o blog da Pavanelli Arquitetura, em Uberlândia.',
     url: '/blog',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog | Pavanelli Arquitetura',
-    description: 'Reflexões sobre arquitetura, materiais, processo criativo e tendências. Pavanelli Arquitetura — Uberlândia.',
+    title: 'Blog de Arquitetura em Uberlândia | Pavanelli Arquitetura',
+    description: 'Reflexões sobre arquitetura, materiais, processo criativo e tendências. Acompanhe o blog da Pavanelli Arquitetura, em Uberlândia.',
   },
 };
 
@@ -66,12 +66,12 @@ export default async function BlogPage() {
       </ScrollReveal>
       <ScrollReveal delay={100}>
         <h1 className="font-display text-[32px] md:text-[48px] font-bold text-brand-graphite leading-[1.1] mb-6 tracking-tight">
-          Ideias e referências
+          Blog de Arquitetura em Uberlândia
         </h1>
       </ScrollReveal>
       <ScrollReveal delay={200}>
         <p className="text-[17px] text-brand-gray max-w-[600px] leading-relaxed font-light">
-          Reflexões sobre arquitetura, materiais, processo criativo e tendências.
+          Ideias e referências da Pavanelli Arquitetura. Reflexões sobre materiais, processo criativo e tendências.
         </p>
       </ScrollReveal>
 

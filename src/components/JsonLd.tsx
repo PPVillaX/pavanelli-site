@@ -3,7 +3,7 @@ import { getContactSettings, getSeoSettings, getSocialSettings } from '@/lib/set
 // Re-export client-safe JsonLd components for backward compatibility
 export { ImageGalleryJsonLd, BreadcrumbJsonLd } from '@/components/JsonLdProject';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://pavanelliarquitetura.com.br';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pavanelliarquitetura.com.br';
 
 export async function LocalBusinessJsonLd() {
   const [contact, seo, social] = await Promise.all([
