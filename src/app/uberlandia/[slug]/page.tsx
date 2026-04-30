@@ -5,7 +5,7 @@ import {
   getLocationBySlug,
   getPublishedLocations,
   getPublishedProjects,
-  getLocationById,
+  getPublishedLocationById,
   filterProjectsByLocationMatchKeys,
 } from '@/lib/queries';
 import { extractFAQs, buildFAQPageJsonLd } from '@/lib/extract-faqs';
@@ -81,10 +81,16 @@ export default async function LocationPage({ params }: Props) {
   const canonical = `${siteUrl}/uberlandia/${location.slug}`;
   const typeLabel = resolveTypeLabel(location);
 
-  // Carrega projetos e parent (para breadcrumb hierárquico) em paralelo
+  // Carrega projetos e parent (para breadcrumb hierárquico) em paralelo.
+  // IMPORTANTE: usa getPublishedLocationById (com cache) e não getLocationById,
+  // porque a página é estática com revalidate=60 e generateStaticParams.
+  // Misturar fetch sem cache (ADMIN_REVALIDATE=0) com geração estática causa
+  // erro 500 em Next 16.
   const [allProjects, parentLocation] = await Promise.all([
     getPublishedProjects(),
-    location.parent_location_id ? getLocationById(location.parent_location_id) : Promise.resolve(null),
+    location.parent_location_id
+      ? getPublishedLocationById(location.parent_location_id)
+      : Promise.resolve(null),
   ]);
 
   const projectsHere = filterProjectsByLocationMatchKeys(allProjects, location.match_keys);

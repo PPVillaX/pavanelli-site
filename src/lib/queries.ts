@@ -275,6 +275,22 @@ export async function getLocationById(id: string): Promise<DbLocation | null> {
 }
 
 /**
+ * Versão pública com cache para uso em páginas estáticas (ex: parent breadcrumb).
+ * Filtra por is_published=true e usa cache PUBLIC_REVALIDATE.
+ *
+ * Importante: usar `getLocationById` (sem cache, ADMIN_REVALIDATE=0) numa página
+ * com `export const revalidate = N` e `generateStaticParams` causa conflito no
+ * Next 16 e resulta em erro 500 no render. Use esta função para fetch a partir
+ * de páginas públicas/estáticas.
+ */
+export async function getPublishedLocationById(id: string): Promise<DbLocation | null> {
+  const arr = await pgrest<DbLocation[]>(
+    `/rest/v1/locations?id=eq.${encodeURIComponent(id)}&is_published=eq.true&limit=1`,
+  );
+  return arr?.[0] ?? null;
+}
+
+/**
  * Filtra projetos cuja `project.location` contém qualquer uma das match_keys
  * (case insensitive). Usado pela página /uberlandia/[slug] para listar projetos
  * automaticamente sem precisar associar manualmente cada projeto a uma location.
